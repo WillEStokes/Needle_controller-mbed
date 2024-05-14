@@ -1,0 +1,9 @@
+{
+    "target_overrides": {
+        "*": {
+            "platform.stdio-baud-rate": 115200,
+            "target.printf_lib": "std",
+            "platform.callback-nontrivial": true
+        }
+    }
+}

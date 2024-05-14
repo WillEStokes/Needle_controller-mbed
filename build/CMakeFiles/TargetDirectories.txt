@@ -1,0 +1,8 @@
+C:/Users/menwst/Documents/CPP/Needle_controller-mbed/build/CMakeFiles/NeedleController.dir
+C:/Users/menwst/Documents/CPP/Needle_controller-mbed/build/CMakeFiles/flash-NeedleController.dir
+C:/Users/menwst/Documents/CPP/Needle_controller-mbed/build/CMakeFiles/edit_cache.dir
+C:/Users/menwst/Documents/CPP/Needle_controller-mbed/build/CMakeFiles/rebuild_cache.dir
+C:/Users/menwst/Documents/CPP/Needle_controller-mbed/build/mbed-cmake/mbed-src/CMakeFiles/mbed-linker-script.dir
+C:/Users/menwst/Documents/CPP/Needle_controller-mbed/build/mbed-cmake/mbed-src/CMakeFiles/rebuild_cache.dir
+C:/Users/menwst/Documents/CPP/Needle_controller-mbed/build/mbed-cmake/mbed-src/CMakeFiles/mbed-os-static.dir
+C:/Users/menwst/Documents/CPP/Needle_controller-mbed/build/mbed-cmake/mbed-src/CMakeFiles/edit_cache.dir
