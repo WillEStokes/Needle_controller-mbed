@@ -15,7 +15,7 @@ This project provides code to read multi-channel differential data using an mbed
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your/repo.git
+    git clone https://github.com/WillEStokes/Needle_controller-mbed.git
     ```
 
 2. Include the necessary libraries in your project.
