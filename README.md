@@ -7,8 +7,8 @@ This project provides code to read multi-channel differential data using an mbed
 ## Requirements
 
 - mbed K64F board
-- Mirkoe ADC 18 Click board
-- 3 QEIs (Quadrature Encoder Interfaces)
+- Mikroe Arduino Uno Click shield
+- Mikroe ADC 18 Click board
 
 ## Installation
 
