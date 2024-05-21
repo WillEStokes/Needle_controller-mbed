@@ -10,11 +10,13 @@ const NeedleController::ComMessage NeedleController::comMessages[] = {
     {FID_GET_FT_SENSOR_DATA, (NeedleController::messageHandlerFunc)&NeedleController::getFTSensorData},
     {FID_GET_ENCODER_SENSOR_DATA, (NeedleController::messageHandlerFunc)&NeedleController::getEncoderSensorData},
     {FID_GET_ALL_SENSOR_DATA, (NeedleController::messageHandlerFunc)&NeedleController::getAllSensorData},
+    {FID_GET_ALL_SENSOR_DATA_MULTIPLE, (NeedleController::messageHandlerFunc)&NeedleController::getAllSensorDataMultiple},
     {FID_START_ACQUISITION_STREAM, (NeedleController::messageHandlerFunc)&NeedleController::startAcquisitionStream},
     {FID_STOP_ACQUISITION_STREAM, (NeedleController::messageHandlerFunc)&NeedleController::stopAcquisitionStream},
     {FID_RESET_ADC, (NeedleController::messageHandlerFunc)&NeedleController::resetADC},
     {FID_CHECK_ADC, (NeedleController::messageHandlerFunc)&NeedleController::checkADC},
     {FID_SET_ADC_CONVERSION_MODE, (NeedleController::messageHandlerFunc)&NeedleController::setADCConversionMode},
+    {FID_SET_ADC_DATA_RATE, (NeedleController::messageHandlerFunc)&NeedleController::setADCDataRate},
 };
 
 /*! Parameterised constructor */
@@ -24,7 +26,9 @@ NeedleController::NeedleController(
         :
         _redLED(redLED),
         _statusLED(statusLED),
-        _adc18_FT(PTB2, // rdy
+        _adc18_FT(
+                // PTB2,   // rdy
+                D7,     // rdy
                 D10,    // chip_select
                 D2,     // int_pin
                 D11,    // mosi
@@ -54,7 +58,7 @@ void NeedleController::getStatus(const MessageHeader* data) {
 }
 
 /*! Get system info */
-void NeedleController::getSystemInfo(const MessageHeader* data) {
+void NeedleController::getSystemInfo(const MessageHeader* data) { 
     static SystemInfo systemInfo;
     
     systemInfo.header.packetLength = sizeof(SystemInfo);
@@ -89,10 +93,6 @@ void NeedleController::getEncoderSensorData(const MessageHeader* data) {
     _socket->send((char*) &encoderDataMessage, sizeof(EncoderDataMessage));
 }
 
-void NeedleController::getFTDataThread() {
-    _adcData_6Channel = _adc18_FT.getADCData_6Channel();
-}
-
 void NeedleController::getAllSensorData(const MessageHeader* data) { 
     static AllDataMessage allDataMessage;
     allDataMessage.header.packetLength = sizeof(allDataMessage);
@@ -101,7 +101,25 @@ void NeedleController::getAllSensorData(const MessageHeader* data) {
     _startTime = us_ticker_read();
 
     allDataMessage.allData.adcData_6Channel = _adc18_FT.getADCData_6Channel();
-    // allDataMessage.allData.adcData_6Channel = _adc18_FT.getADCData_6Channel_continuous();
+
+    allDataMessage.allData.time = us_ticker_read() - _startTime;
+
+    allDataMessage.allData.encoder_data.xPos = static_cast<float>(_qei_x.getPulses()) * QEI_SCALE_FACTOR;
+    allDataMessage.allData.encoder_data.yPos = static_cast<float>(_qei_y.getPulses()) * QEI_SCALE_FACTOR;
+    allDataMessage.allData.encoder_data.zPos = static_cast<float>(_qei_z.getPulses()) * QEI_SCALE_FACTOR;
+    
+    _socket->send((char*) &allDataMessage, sizeof(AllDataMessage));
+}
+
+void NeedleController::getAllSensorDataMultiple(const Settings* data) { 
+    static AllDataMessage allDataMessage;
+    allDataMessage.header.packetLength = sizeof(allDataMessage);
+    allDataMessage.header.fid = FID_GET_ALL_SENSOR_DATA;
+    clearAllData(&allDataMessage.allData);
+    _startTime = us_ticker_read();
+
+    allDataMessage.allData.adcData_6Channel = _adc18_FT.getADCData_6Channel_multiple(data->value);
+
     allDataMessage.allData.time = us_ticker_read() - _startTime;
 
     allDataMessage.allData.encoder_data.xPos = static_cast<float>(_qei_x.getPulses()) * QEI_SCALE_FACTOR;
@@ -117,13 +135,14 @@ void NeedleController::streamData() {
     clearAllData(&allData);
 
     allData.time = us_ticker_read() - _startTime;
-    allData.encoder_data.xPos = allData.encoder_data.xPos = static_cast<float>(_qei_x.getPulses()) * QEI_SCALE_FACTOR;
-    allData.encoder_data.yPos = allData.encoder_data.yPos = static_cast<float>(_qei_y.getPulses()) * QEI_SCALE_FACTOR;
-    allData.encoder_data.zPos = allData.encoder_data.zPos = static_cast<float>(_qei_z.getPulses()) * QEI_SCALE_FACTOR;
+    allData.encoder_data.xPos = static_cast<float>(_qei_x.getPulses()) * QEI_SCALE_FACTOR;
+    allData.encoder_data.yPos = static_cast<float>(_qei_y.getPulses()) * QEI_SCALE_FACTOR;
+    allData.encoder_data.zPos = static_cast<float>(_qei_z.getPulses()) * QEI_SCALE_FACTOR;
 
     uint8_t samplesToAverage = 5;
     for (int i = 0; i < samplesToAverage; ++i) {
-        _adcData_6Channel = _adc18_FT.getADCData_6Channel();
+        // _adcData_6Channel = _adc18_FT.getADCData_6Channel();
+        _adcData_6Channel = _adc18_FT.getADCData_6Channel_multiple(3);
 
         allData.adcData_6Channel.ai1 += _adcData_6Channel.ai1;
         allData.adcData_6Channel.ai2 += _adcData_6Channel.ai2;
@@ -139,8 +158,6 @@ void NeedleController::streamData() {
     allData.adcData_6Channel.ai4 = allData.adcData_6Channel.ai4 / samplesToAverage;
     allData.adcData_6Channel.ai5 = allData.adcData_6Channel.ai5 / samplesToAverage;
     allData.adcData_6Channel.ai6 = allData.adcData_6Channel.ai6 / samplesToAverage;
-
-    // allData.adcData_6Channel = _adc18_FT.getADCData_6Channel_continuous();
 
     _socket->send((char*) &allData, sizeof(AllData));
 }
@@ -180,8 +197,12 @@ void NeedleController::checkADC(const MessageHeader* data) {
     _adc18_FT.adc18_check_communication();
 }
 
-void NeedleController::setADCConversionMode(const MessageHeader* data) {
-    _adc18_FT.adc18_set_conversion_mode(ADC18_CONV_MODE_CONTINUOUS);
+void NeedleController::setADCConversionMode(const Settings* data) {
+    _adc18_FT.adc18_set_conversion_mode(data->value);
+}
+
+void NeedleController::setADCDataRate(const Settings* data) {
+    _adc18_FT.adc18_set_data_rate(data->value);
 }
 
 /*! LED Functions */
@@ -201,7 +222,7 @@ void NeedleController::initEthernet() {
     // Show the network address
     _eth.get_ip_address(&_ipAddr);
 
-    // Open a socket on the network interface, and create a TCP connection to mbed.org
+    // Open a socket on the network interface, and create a TCP connection
     _server.open(&_eth);
     _server.bind(7851);
     _server.listen(1);
@@ -212,7 +233,7 @@ void NeedleController::initEthernet() {
 /*! Getting a function pointer based on the FID */
 const NeedleController::ComMessage* NeedleController::getComFromHeader(const MessageHeader* header) {
 
-    if (header->fid >= _fidCount) { //Prevent getting out of an array
+    if (header->fid >= _fidCount) { // Prevent getting out of an array
         return NULL;
     }
 

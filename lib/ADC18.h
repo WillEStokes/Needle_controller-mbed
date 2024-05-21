@@ -45,9 +45,9 @@
 #define ADC18_DATA_RATE_11520_SPS           0x0E
 #define ADC18_DATA_RATE_23040_SPS           0x0F
 
-#define ADC18_CONV_MODE_CONTINUOUS          0x00
-#define ADC18_CONV_MODE_SINGLE_CYCLE        0x02
-#define ADC18_CONV_MODE_CONT_SINGLE_CYCLE   0x03
+#define ADC18_CONV_MODE_CONTINUOUS          0x00 // Fastest rate, low accuracy
+#define ADC18_CONV_MODE_SINGLE_CYCLE        0x02 // High accuracy
+#define ADC18_CONV_MODE_CONT_SINGLE_CYCLE   0x03 // Faster rate, low accuracy
 
 #define ADC18_CH_AI1_SINGLE_ENDED           0x00
 #define ADC18_CH_AI2_SINGLE_ENDED           0x01
@@ -61,12 +61,6 @@
 #define ADC18_CH_AI10_SINGLE_ENDED          0x09
 #define ADC18_CH_AI11_SINGLE_ENDED          0x0A
 #define ADC18_CH_AI12_SINGLE_ENDED          0x0B
-#define ADC18_CH_AI1_AI2_DIFFERENTIAL       0x0C
-#define ADC18_CH_AI3_AI4_DIFFERENTIAL       0x0D
-#define ADC18_CH_AI5_AI6_DIFFERENTIAL       0x0E
-#define ADC18_CH_AI7_AI8_DIFFERENTIAL       0x0F
-#define ADC18_CH_AI9_AI10_DIFFERENTIAL      0x10
-#define ADC18_CH_AI11_AI12_DIFFERENTIAL     0x11
 
 #define ADC18_AIP_TEST_2MOHM_TO_AGND        0x40
 #define ADC18_AIP_TEST_2MOHM_TO_HVDD        0x80
@@ -77,24 +71,22 @@
 #define ADC18_AIN_TEST_2MOHM_TO_HVDD_AGND   0x30
 
 #define ADC18_SPI_READ_BIT                  0x01
+#define EVENT_READY_FLAG                    0x01
 
 class ADC18
 {
     public:
-        typedef struct
-        {
-            // Output pins
-            // DigitalOut rst; /**< Active-Low reset pin. */
-            DigitalOut chip_select; /**< Chip select pin descriptor (used for SPI driver). */
-
-            // Input pins
-            AnalogIn rdy; /**< Active-Low data ready pin. */
-            DigitalIn int_pin; /**< Active-Low interrupt pin. */
-        } adc18_t;
-
         // Constructor
-        // ADC18(PinName rdy, PinName rst, PinName chip_select, PinName int_pin, PinName mosi_pin, PinName miso_pin, PinName sck_pin);
         ADC18(PinName rdy, PinName chip_select, PinName int_pin, PinName mosi_pin, PinName miso_pin, PinName sck_pin);
+
+        enum ADC18_Channel {
+            ADC18_CH_AI1_AI2_DIFFERENTIAL = 0x0C,
+            ADC18_CH_AI3_AI4_DIFFERENTIAL = 0x0D,
+            ADC18_CH_AI5_AI6_DIFFERENTIAL = 0x0E,
+            ADC18_CH_AI7_AI8_DIFFERENTIAL = 0x0F,
+            ADC18_CH_AI9_AI10_DIFFERENTIAL = 0x10,
+            ADC18_CH_AI11_AI12_DIFFERENTIAL = 0x11
+        };
 
         typedef enum
         {
@@ -112,24 +104,35 @@ class ADC18
         } __attribute__((__packed__)) ADCData_6Channel;
 
         ADC18::ADCData_6Channel getADCData_6Channel();
-        ADC18::ADCData_6Channel getADCData_6Channel_continuous();
+        ADC18::ADCData_6Channel getADCData_6Channel_multiple(uint8_t samplesToAverage);
         float read_ADC_18(uint8_t channel);
-        float read_ADC_18_continuous(uint8_t channel);
-        int adc18_read_voltage(adc18_t *ctx, float *voltage);
+        void check_num_samples();
+        int adc18_read_voltage(float *voltage);
         void adc18_reset_device();
         int adc18_check_communication();
         int adc18_set_conversion_mode(uint8_t mode);
-        int adc18_read_register(adc18_t *ctx, uint8_t reg, uint32_t *data_out);
-        int adc18_write_register(adc18_t *ctx, uint8_t reg, uint32_t data_in);
+        void adc18_set_data_rate(uint8_t rate);
+        int adc18_read_register(uint8_t reg, uint32_t *data_out);
+        int adc18_write_register(uint8_t reg, uint32_t data_in);
 
     private:
+
+    /*! Pins */
+    DigitalOut _chip_select; /**< Chip select pin descriptor (used for SPI driver). */
+    InterruptIn _rdy; /**< Active-Low data ready pin. */
+    // AnalogIn _rdy; /**< Active-Low data ready pin. */
+    DigitalIn _int_pin; /**< Active-Low interrupt pin. */
 
     /*! Variables */
     SPI *spi_p;
     SPI &_spi;
-    int _error_flag;
     uint32_t _prod_id;
-    adc18_t _adc18;
+    uint8_t _data_rate;
+    uint8_t _samples_to_average;
+    uint8_t _num_falling_edges;
+    int _error_flag;
+    float _mean_voltage;
+    bool _acquire;
 };
 
 #endif

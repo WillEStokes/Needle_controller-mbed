@@ -23,11 +23,13 @@ class NeedleController {
         FID_GET_FT_SENSOR_DATA = 2,
         FID_GET_ENCODER_SENSOR_DATA = 3,
         FID_GET_ALL_SENSOR_DATA = 4,
-        FID_START_ACQUISITION_STREAM = 5,
-        FID_STOP_ACQUISITION_STREAM = 6,
-        FID_RESET_ADC = 7,
-        FID_CHECK_ADC = 8,
-        FID_SET_ADC_CONVERSION_MODE = 9,
+        FID_GET_ALL_SENSOR_DATA_MULTIPLE = 5,
+        FID_START_ACQUISITION_STREAM = 6,
+        FID_STOP_ACQUISITION_STREAM = 7,
+        FID_RESET_ADC = 8,
+        FID_CHECK_ADC = 9,
+        FID_SET_ADC_CONVERSION_MODE = 10,
+        FID_SET_ADC_DATA_RATE = 11,
     };
     
     /*! List of message errors */
@@ -68,6 +70,11 @@ private:
         MessageHeader header;
         uint8_t boardState;
     } __attribute__((__packed__)) SystemStatus;
+
+    typedef struct {
+        MessageHeader header;
+        uint8_t value;
+    } __attribute__((__packed__)) Settings;
         
     typedef struct {
         MessageHeader header;
@@ -113,13 +120,13 @@ private:
     void getFTSensorData(const MessageHeader* data);
     void getEncoderSensorData(const MessageHeader* data);
     void getAllSensorData(const MessageHeader* data);
+    void getAllSensorDataMultiple(const Settings* data);
     void startAcquisitionStream(const MessageHeader* data);
     void stopAcquisitionStream(const MessageHeader* data);
     void resetADC(const MessageHeader* data);
     void checkADC(const MessageHeader* data);
-    void setADCConversionMode(const MessageHeader* data);
-    void getFTDataThread();
-    void getEncoderDataThread();
+    void setADCConversionMode(const Settings* data);
+    void setADCDataRate(const Settings* data);
     void streamData();
     void clearAllData(AllData* allData);
     void flipStatusLED();
