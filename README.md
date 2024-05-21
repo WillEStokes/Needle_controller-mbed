@@ -1,5 +1,5 @@
 # Needle_controller-mbed
-Mbed K64F board with Mikroe ADC 18 Click!
+Mbed K64F with Mikroe ADC 18 Click!
 
 ## Description
 
