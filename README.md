@@ -2,7 +2,7 @@
 
 ## Description
 
-This project provides code to read multi-channel differential data using an mbed K64F board with a Mikroe ADC 18 Click board. Additionally, it includes code and a library to read encoder data using QEI.
+Read multi-channel differential data using an mbed K64F board with a Mikroe ADC 18 Click board. A library file is included to simultaneously read encoder data with QEI.
 
 ## Requirements
 
