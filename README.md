@@ -3,7 +3,7 @@ Mbed K64F with Mikroe ADC 18 Click!
 
 ## Description
 
-Read multi-channel differential data using an mbed K64F board with a Mikroe ADC 18 Click board. An ADC18 library file is included which is adapted from the official Mikroe source code. The pins used to construct an instance of the ADC18 class correspond to the pins for position 1 of the Mikroe Arduino Uno Click Shield (MIKROE-1581). With the exception of the ready pin which is ported to a digital pin for greater determinism during falling edge detection. A library file is also included to simultaneously read encoder data with QEI.
+Read multi-channel differential data using an mbed K64F board with a Mikroe ADC 18 Click board. An ADC18 library file is included which is adapted from the official Mikroe source code. The pins used to construct an instance of the ADC18 class correspond to the pins for position 1 of the Mikroe Arduino Uno Click Shield (MIKROE-1581). With the exception of the ready pin which is ported to a digital pin by a simple external circuit for greater determinism during falling edge detection. A library file is also included to simultaneously read encoder data with QEI.
 
 ## Hardware Requirements
 
