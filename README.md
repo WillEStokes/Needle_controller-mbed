@@ -15,9 +15,9 @@ Read multi-channel differential data using an mbed K64F board with a Mikroe ADC 
 
 1. Clone the repository:
 
-    ```bash
-    git clone https://github.com/WillEStokes/Needle_controller-mbed.git
-    ```
+```bash
+git clone https://github.com/WillEStokes/Needle_controller-mbed.git
+```
 
 3. Include the necessary libraries in your project.
 
@@ -27,23 +27,23 @@ Read multi-channel differential data using an mbed K64F board with a Mikroe ADC 
 
 To use this driver, you need to create an instance of the `NeedleController` class, passing the pin names for the red LED and status LED to the constructor.
 
-    ```cpp
-    NeedleController needleController(PinName redLED, PinName statusLED);
-    ```
+```cpp
+NeedleController needleController(PinName redLED, PinName statusLED);
+```
 
 Then, you can use the methods provided by the `NeedleController` class to interact with the device.
 
-    ```cpp
-    needleController.run();
-    ```
+```cpp
+needleController.run();
+```
 
 2. To initialise an instance of `ADC18`:
 
 To use this driver, you need to create an instance of the `ADC18` class, passing the pin names for the ready signal, chip select, interrupt pin, MOSI (Master Out Slave In), MISO (Master In Slave Out), and SCK (Serial Clock) to the constructor.
 
-    ```cpp
-    ADC18 adc18(PinName rdy, PinName chip_select, PinName int_pin, PinName mosi_pin, PinName miso_pin, PinName sck_pin);
-    ```
+```cpp
+ADC18 adc18(PinName rdy, PinName chip_select, PinName int_pin, PinName mosi_pin, PinName miso_pin, PinName sck_pin);
+```
 
 Then, you can use the methods provided by the `ADC18` class to interact with the ADC.
 
@@ -53,7 +53,7 @@ This driver requires the mbed.h library.
 
 ## API Reference
 
-## NeedleController Class
+### NeedleController Class
 
 This is a C++ driver for a needle insertion test system. As part of the system, this NeedleController device interfaces with an 18-bit Analog-to-Digital Converter (ADC) and a Quadrature Encoder Interface (QEI). The driver provides methods for getting system status, sensor data, starting and stopping data acquisition, and configuring the ADC.
 
@@ -111,7 +111,7 @@ The class provides several methods for getting system status, system info, force
 
 This driver requires the mbed.h, EthernetInterface.h, ADC18.h, and QEI.h libraries.
 
-## ADC18 Driver Class
+### ADC18 Driver Class
 
 This is a C++ driver for an 18-bit Analog-to-Digital Converter (ADC), specifically the ADC18 model. This driver allows you to interact with the ADC, providing methods for setting the conversion mode, setting the data rate, resetting the device, and reading the ADC data.
 
