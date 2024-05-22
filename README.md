@@ -1,15 +1,28 @@
 # Needle_controller-mbed
-Mbed K64F with Mikroe ADC 18 Click!
 
-## Description
+Mbed FRDM K64F with Mikroe ADC 18 Click!
 
-Read multi-channel differential data using an mbed K64F board with a Mikroe ADC 18 Click board. An ADC18 library file is included which is adapted from the official Mikroe source code. The pins used to construct an instance of the ADC18 class correspond to the pins for position 1 of the Mikroe Arduino Uno Click Shield (MIKROE-1581). With the exception of the ready pin which is ported to a digital pin by a simple external circuit for greater determinism during falling edge detection. A library file is also included to simultaneously read encoder data with QEI.
+Read multi-channel differential data using an mbed FRDM K64F board with a Mikroe ADC 18 Click board.
+
+This is a C++ driver for an mbed FRDM K64F device which handles all the sensor measurements in a bespoke needle insertion laboratory test system. However it can be adapted for other applications requiring the reading of multiple wide voltage-range (+/- 10 V) analogue input channels at fast data rates and/or reading multiple encoder values.
+
+The driver is designed to be slave to a host device which sends and receives commands via Ethernet TCP/IP. See `Needle_controller_tester.py` in the project root directory for an example of how to establish a connection and parse commands.
+
+## Class Description
+
+This project consists of a parent `NeedleController` class which interfaces with an 18-bit Analog-to-Digital Converter (ADC) via the `ADC18` class and a Quadrature Encoder Interface (QEI) via the `QEI` class.
+
+In the parent `NeedleController` class, the pins used to construct an instance of the `ADC18` class correspond to the pins for position 1 of the Mikroe Arduino Uno Click Shield. With the exception of the ready pin `rdy` which is ported to a digital pin by a simple external circuit, for greater determinism during falling edge detection.
+
+The `ADC18` class file is adapted from the [official Mikroe source code](https://libstock.mikroe.com/projects/view/4951/adc-18-click).
+
+A `QEI` class file is also included to simultaneously read encoder data with QEI [documented here](https://os.mbed.com/users/aberk/code/QEI/).
 
 ## Hardware Requirements
 
-- mbed K64F board
-- Mikroe Arduino Uno Click shield
-- Mikroe ADC 18 Click board
+- mbed FRDM K64F board
+- Mikroe Arduino Uno Click Shield (MIKROE-1581)
+- Mikroe ADC 18 Click board (MIKROE-5132)
 
 ## Installation
 
@@ -49,7 +62,7 @@ Then, you can use the methods provided by the `ADC18` class to interact with the
 
 ### 1. NeedleController Class
 
-This is a C++ driver for a needle insertion test system. As part of the overall system, the NeedleController device flashed with this driver interfaces with an 18-bit Analog-to-Digital Converter (ADC) and a Quadrature Encoder Interface (QEI). The driver provides methods for getting system status, sensor data, starting and stopping data acquisition, and configuring the ADC.
+The device flashed with this driver interfaces with an 18-bit Analog-to-Digital Converter (ADC) and a Quadrature Encoder Interface (QEI). The driver provides methods for getting system status, sensor data, starting and stopping data acquisition, and configuring the ADC.
 
 #### Enumerations
 
