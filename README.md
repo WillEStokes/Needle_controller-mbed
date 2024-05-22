@@ -32,9 +32,13 @@ Clone the repository:
 git clone https://github.com/WillEStokes/Needle_controller-mbed.git
 ```
 
-## Usage
+## API Reference
 
-1. Initialise an instance of `NeedleController`:
+### 1. NeedleController Class
+
+The device flashed with this driver interfaces with a 24-bit Analog-to-Digital Converter (ADC) and a Quadrature Encoder Interface (QEI). The driver provides methods for getting system status, sensor data, starting and stopping data acquisition, and configuring the ADC.
+
+## Usage
 
 To use this driver, you need to create an instance of the `NeedleController` class, passing the pin names for the red LED and status LED to the constructor.
 
@@ -47,22 +51,6 @@ Then, you can use the methods provided by the `NeedleController` class to intera
 ```cpp
 needleController.run();
 ```
-
-2. Initialise an instance of `ADC18`:
-
-To use this driver, you need to create an instance of the `ADC18` class, passing the pin names for the ready signal, chip select, interrupt pin, MOSI (Master Out Slave In), MISO (Master In Slave Out), and SCK (Serial Clock) to the constructor.
-
-```cpp
-ADC18 adc18(PinName rdy, PinName chip_select, PinName int_pin, PinName mosi_pin, PinName miso_pin, PinName sck_pin);
-```
-
-Then, you can use the methods provided by the `ADC18` class to interact with the ADC.
-
-## API Reference
-
-### 1. NeedleController Class
-
-The device flashed with this driver interfaces with an 18-bit Analog-to-Digital Converter (ADC) and a Quadrature Encoder Interface (QEI). The driver provides methods for getting system status, sensor data, starting and stopping data acquisition, and configuring the ADC.
 
 #### Enumerations
 
@@ -124,6 +112,16 @@ This is a C++ driver for an 18-bit Analog-to-Digital Converter (ADC), specifical
 - Set data rate
 - Reset device
 - Read ADC data
+
+## Usage
+
+To use this driver, you need to create an instance of the `ADC18` class, passing the pin names for the ready signal, chip select, interrupt pin, MOSI (Master Out Slave In), MISO (Master In Slave Out), and SCK (Serial Clock) to the constructor.
+
+```cpp
+ADC18 adc18(PinName rdy, PinName chip_select, PinName int_pin, PinName mosi_pin, PinName miso_pin, PinName sck_pin);
+```
+
+Then, you can use the methods provided by the `ADC18` class to interact with the ADC.
 
 #### Methods
 
