@@ -24,7 +24,7 @@ A `QEI` class file is also included to simultaneously read encoder data with QEI
 - Mikroe Arduino Uno Click Shield (MIKROE-1581)
 - Mikroe ADC 18 Click board (MIKROE-5132)
 
-## Installation
+## Installation and Compilation
 
 Clone the repository:
 
@@ -32,16 +32,16 @@ Clone the repository:
 git clone https://github.com/WillEStokes/Needle_controller-mbed.git
 ```
 
-## Compilation
-
-The project uses an offline version of the mbed library which is configured for the FRDM K64F target using the instruction in the [mbed-cmake](https://github.com/USCRPL/mbed-cmake) repo.
+The project uses an offline version of the mbed library which is configured for the FRDM K64F target using the instruction in the [mbed-cmake repo](https://github.com/USCRPL/mbed-cmake).
 
 To compile the project:
 
-1. Get CMake by downloading the installer from [here](https://cmake.org/download/)
-2. Get the latest release of Ninja by downloading the exe from [here](https://github.com/ninja-build/ninja/releases)
-3. If necessary, update PATH variables so the CMake and ninja are visible on your system
-4. From VS Code, cd into the build directory from the project root and run 'ninja' in the command console
+1. Get CMake by [downloading the installer from here](https://cmake.org/download/). Make sure to select "Add CMake to the system PATH for all users"!
+2. Get the GNU ARM toolchain by [downloading the 32-bit installer from ARM's website](https://developer.arm.com/downloads/-/gnu-rm). Make sure to check "Add path to environment variable" in the installer!
+3. Get the latest release of Ninja by [downloading the exe from here](https://github.com/ninja-build/ninja/releases)
+4. If necessary, update PATH variables so the CMake, GNU ARM toolchain and Ninja are visible on your system
+5. To configure cmake build files for the project, run `cmake -G Ninja ${Workspace Folder}` in the command console from the build directory. Make sure to terminate ${Workspace Folder} with a "\". Previous cache files may need to manually removed before configuring, or reconfiguring the build files.
+6. Finally to build the project into a binary file, simply run 'ninja' in the command console from the build directory.
 
 ## API Reference
 
