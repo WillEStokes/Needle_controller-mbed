@@ -27,12 +27,12 @@ Read multi-channel differential data using an mbed K64F board with a Mikroe ADC 
 
 To use this driver, you need to create an instance of the `NeedleController` class, passing the pin names for the red LED and status LED to the constructor.
 
-    ```cpp
+    ```
     NeedleController needleController(PinName redLED, PinName statusLED);
     ```
 Then, you can use the methods provided by the `NeedleController` class to interact with the device.
 
-    ```cpp
+    ```bash
     needleController.run();
     ```
 
