@@ -2,7 +2,7 @@
 
 Mbed FRDM K64F with Mikroe ADC 18 Click!
 
-Read multi-channel differential data using an mbed FRDM K64F board with a Mikroe ADC 18 Click board.
+Read multi-channel differential data using an mbed FRDM K64F controller with a Mikroe ADC 18 Click board.
 
 This is a C++ driver for an mbed FRDM K64F device equipped with a Mikroe Arduino Uno Shield and Mikroe ADC 18 Click board, which handles all the sensor measurements in a bespoke laboratory needle-insertion test system. However it can be adapted for other applications requiring reading multiple analogue input channels with wide voltage-range (+/- 10 V) at fast data rates, and/or reading multiple encoder values.
 
@@ -20,7 +20,7 @@ A `QEI` class file is also included to simultaneously read encoder data with QEI
 
 ## Hardware Requirements
 
-- Mbed FRDM K64F board
+- Mbed FRDM K64F controller
 - Mikroe Arduino Uno Click Shield (MIKROE-1581)
 - Mikroe ADC 18 Click board (MIKROE-5132)
 
