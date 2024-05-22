@@ -32,6 +32,17 @@ Clone the repository:
 git clone https://github.com/WillEStokes/Needle_controller-mbed.git
 ```
 
+## Compilation
+
+The project uses an offline version of the mbed library which is configured for the FRDM K64F target using the instruction in the [mbed-cmake](https://github.com/USCRPL/mbed-cmake) repo.
+
+To compile the project:
+
+1. Get CMake by downloading the installer from [here](https://cmake.org/download/)
+2. Get the latest release of Ninja by downloading the exe from [here](https://github.com/ninja-build/ninja/releases)
+3. If necessary, update PATH variables so the CMake and ninja are visible on your system
+4. From VS Code, cd into the build directory from the project root and run 'ninja' in the command console
+
 ## API Reference
 
 ### 1. NeedleController Class
