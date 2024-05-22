@@ -19,6 +19,8 @@ const NeedleController::ComMessage NeedleController::comMessages[] = {
     {FID_SET_ADC_DATA_RATE, (NeedleController::messageHandlerFunc)&NeedleController::setADCDataRate},
 };
 
+BufferedSerial NeedleController::pc(USBTX, USBRX, 9600);
+
 /*! Parameterised constructor */
 NeedleController::NeedleController(
         PinName redLED,
@@ -103,6 +105,7 @@ void NeedleController::getAllSensorData(const MessageHeader* data) {
     allDataMessage.allData.adcData_6Channel = _adc18_FT.getADCData_6Channel();
 
     allDataMessage.allData.time = us_ticker_read() - _startTime;
+    D(printf("Time: %d\n", allDataMessage.allData.time));
 
     allDataMessage.allData.encoder_data.xPos = static_cast<float>(_qei_x.getPulses()) * QEI_SCALE_FACTOR;
     allDataMessage.allData.encoder_data.yPos = static_cast<float>(_qei_y.getPulses()) * QEI_SCALE_FACTOR;
@@ -121,6 +124,7 @@ void NeedleController::getAllSensorDataMultiple(const Settings* data) {
     allDataMessage.allData.adcData_6Channel = _adc18_FT.getADCData_6Channel_multiple(data->value);
 
     allDataMessage.allData.time = us_ticker_read() - _startTime;
+    D(printf("Time: %d\n", allDataMessage.allData.time));
 
     allDataMessage.allData.encoder_data.xPos = static_cast<float>(_qei_x.getPulses()) * QEI_SCALE_FACTOR;
     allDataMessage.allData.encoder_data.yPos = static_cast<float>(_qei_y.getPulses()) * QEI_SCALE_FACTOR;
@@ -275,6 +279,7 @@ void NeedleController::setBoardState(int state) {
 void NeedleController::run() {
     // Indicate initialising state of a system
     setBoardState(WAIT_FOR_CONNECTION);
+    D(printf("Initialising ethernet...\n"));
     
     initEthernet();
 
@@ -286,13 +291,14 @@ void NeedleController::run() {
     while (true) {
         // Indicate state of a system
         setBoardState(WAIT_FOR_CONNECTION);
-        
+
         _socket = _server.accept();
         _socket->getpeername(&_clientAddr);
         // _socket->set_timeout(1000);
         
         // Indicate state of a system
         setBoardState(CONNECTED);
+        D(printf("Connected...\n"));
         
         while(true) {
             // Wait for a header
@@ -309,6 +315,7 @@ void NeedleController::run() {
             const ComMessage* comMessage = getComFromHeader(header);
             
             if(comMessage != NULL && comMessage->replyFunc != NULL) {
+                // D(printf("FID to call: %d\n", comMessage->fid));
                 // Fact: comMessage->fid is equivalent to (*comMessage).fid
                 (this->*comMessage->replyFunc)((void*)data);
             } else {
@@ -317,6 +324,7 @@ void NeedleController::run() {
         }
         
         // Client disconnected
+        D(printf("Client disconnected...\n"));
         _socket->close();
         
         // Indicate disconnected state

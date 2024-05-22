@@ -1,3 +1,4 @@
+#include "../debug.h"
 #include "ADC18.h"
 
 ADC18::ADC18(PinName rdy, PinName chip_select, PinName int_pin, PinName mosi_pin, PinName miso_pin, PinName sck_pin)
@@ -150,7 +151,7 @@ int ADC18::adc18_read_voltage(float *voltage)
 
 void ADC18::adc18_reset_device()
 {
-// pin on Mikroe Uno shield corresponding to reset is ai which cannot be written
+// analogue input pin on Mikroe Uno shield corresponding to reset cannot be written
 
 //     _adc18.rst.write(0);
 //     wait_us(100000);
@@ -165,6 +166,7 @@ int ADC18::adc18_check_communication()
         _prod_id = (_prod_id >> 16) & 0xFF;
         if(ADC18_PRODUCT_ID == _prod_id)
         {
+            D(printf("ADC18: Communication successful\n"));
             return ADC18_OK;
         }
     }
@@ -175,6 +177,7 @@ int ADC18::adc18_set_conversion_mode(uint8_t mode)
 {
     if (ADC18_OK == adc18_write_register(ADC18_REG_DCHNL_CTRL1, (uint32_t) mode << 16))
         {
+            D(printf("ADC18: Conversion mode set to %d\n", mode));
             return ADC18_OK;
         }
     return ADC18_ERROR;
@@ -183,6 +186,7 @@ int ADC18::adc18_set_conversion_mode(uint8_t mode)
 void ADC18::adc18_set_data_rate(uint8_t rate)
 {
     _data_rate = rate;
+    D(printf("ADC18: Data rate set to %d\n", rate));
 }
 
 int ADC18::adc18_read_register(uint8_t reg, uint32_t *data_out)

@@ -140,6 +140,7 @@ private:
     TCPSocket* _socket;
     TCPSocket _server;
     SocketAddress _clientAddr;
+    static BufferedSerial pc;
 
     /*! Class instances */
     ADC18 _adc18_FT;
