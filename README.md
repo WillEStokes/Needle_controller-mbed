@@ -38,7 +38,7 @@ git clone https://github.com/WillEStokes/Needle_controller-mbed.git
 
 The device flashed with this driver interfaces with a 24-bit Analog-to-Digital Converter (ADC) and a Quadrature Encoder Interface (QEI). The driver provides methods for getting system status, sensor data, starting and stopping data acquisition, and configuring the ADC.
 
-## Usage
+#### Usage
 
 To use this driver, you need to create an instance of the `NeedleController` class, passing the pin names for the red LED and status LED to the constructor.
 
@@ -113,7 +113,7 @@ This is a C++ driver for an 18-bit Analog-to-Digital Converter (ADC), specifical
 - Reset device
 - Read ADC data
 
-## Usage
+#### Usage
 
 To use this driver, you need to create an instance of the `ADC18` class, passing the pin names for the ready signal, chip select, interrupt pin, MOSI (Master Out Slave In), MISO (Master In Slave Out), and SCK (Serial Clock) to the constructor.
 
