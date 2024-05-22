@@ -8,7 +8,7 @@ This is a C++ driver for an mbed FRDM K64F device which handles all the sensor m
 
 The driver is designed to be slave to a host device which sends and receives commands via Ethernet TCP/IP. See `Needle_controller_tester.py` in the project root for an example of how to establish a connection and parse commands.
 
-## Class Description
+## Description
 
 A parent `NeedleController` class interfaces with an 18-bit Analog-to-Digital Converter (ADC) via the `ADC18` class and a Quadrature Encoder Interface (QEI) via the `QEI` class.
 
