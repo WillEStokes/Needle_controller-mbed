@@ -76,46 +76,47 @@
 class ADC18
 {
     public:
-        // Constructor
-        ADC18(PinName rdy, PinName chip_select, PinName int_pin, PinName mosi_pin, PinName miso_pin, PinName sck_pin);
+    // Constructor
+    ADC18(PinName rdy, PinName chip_select, PinName int_pin, PinName mosi_pin, PinName miso_pin, PinName sck_pin);
 
-        enum ADC18_Channel {
-            ADC18_CH_AI1_AI2_DIFFERENTIAL = 0x0C,
-            ADC18_CH_AI3_AI4_DIFFERENTIAL = 0x0D,
-            ADC18_CH_AI5_AI6_DIFFERENTIAL = 0x0E,
-            ADC18_CH_AI7_AI8_DIFFERENTIAL = 0x0F,
-            ADC18_CH_AI9_AI10_DIFFERENTIAL = 0x10,
-            ADC18_CH_AI11_AI12_DIFFERENTIAL = 0x11
-        };
+    enum ADC18_Channel {
+        ADC18_CH_AI1_AI2_DIFFERENTIAL = 0x0C,
+        ADC18_CH_AI3_AI4_DIFFERENTIAL = 0x0D,
+        ADC18_CH_AI5_AI6_DIFFERENTIAL = 0x0E,
+        ADC18_CH_AI7_AI8_DIFFERENTIAL = 0x0F,
+        ADC18_CH_AI9_AI10_DIFFERENTIAL = 0x10,
+        ADC18_CH_AI11_AI12_DIFFERENTIAL = 0x11
+    };
 
-        typedef enum
-        {
-            ADC18_OK = 0,
-            ADC18_ERROR = -1
-        } error;
-        
-        typedef struct {
-            float ai1;
-            float ai2;
-            float ai3;
-            float ai4;
-            float ai5;
-            float ai6;
-        } __attribute__((__packed__)) ADCData_6Channel;
+    typedef enum
+    {
+        ADC18_OK = 0,
+        ADC18_ERROR = -1
+    } error;
+    
+    typedef struct {
+        float ai1;
+        float ai2;
+        float ai3;
+        float ai4;
+        float ai5;
+        float ai6;
+    } __attribute__((__packed__)) ADCData_6Channel;
 
-        ADC18::ADCData_6Channel getADCData_6Channel();
-        ADC18::ADCData_6Channel getADCData_6Channel_multiple(uint8_t samplesToAverage);
-        float read_ADC_18(uint8_t channel);
-        void check_num_samples();
-        int adc18_read_voltage(float *voltage);
-        void adc18_reset_device();
-        int adc18_check_communication();
-        int adc18_set_conversion_mode(uint8_t mode);
-        void adc18_set_data_rate(uint8_t rate);
-        int adc18_read_register(uint8_t reg, uint32_t *data_out);
-        int adc18_write_register(uint8_t reg, uint32_t data_in);
+    ADC18::ADCData_6Channel getADCData_6Channel();
+    ADC18::ADCData_6Channel getADCData_6Channel_multiple(uint8_t samplesToAverage);
+    int adc18_check_communication();
+    int adc18_set_conversion_mode(uint8_t mode);
+    void adc18_set_data_rate(uint8_t rate);
+    void adc18_reset_device();
 
     private:
+
+    float read_ADC_18(uint8_t channel);
+    void check_num_samples();
+    int adc18_read_voltage(float *voltage);
+    int adc18_read_register(uint8_t reg, uint32_t *data_out);
+    int adc18_write_register(uint8_t reg, uint32_t data_in);
 
     /*! Pins */
     DigitalOut _chip_select; /**< Chip select pin descriptor (used for SPI driver). */

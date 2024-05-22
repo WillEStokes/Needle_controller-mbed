@@ -30,7 +30,7 @@ NeedleController::NeedleController(
         _statusLED(statusLED),
         _adc18_FT(
                 // PTB2,   // rdy
-                D7,     // rdy
+                D7,     // rdy (digital falling edge is more deterministic than analog)
                 D10,    // chip_select
                 D2,     // int_pin
                 D11,    // mosi
