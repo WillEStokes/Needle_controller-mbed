@@ -36,7 +36,7 @@ The project uses an offline version of the mbed library which is configured for 
 
 To configure the build system and compile the project:
 
-1. Get CMake by [downloading the installer from here](https://cmake.org/download/). Make sure to select "Add CMake to the system PATH for all users"!
+1. Get CMake by [downloading the installer from here](https://cmake.org/download/). Make sure to select "Add CMake to the system PATH for all users" during installation!
 2. Get the GNU ARM toolchain by [downloading the 32-bit installer from ARM's website](https://developer.arm.com/downloads/-/gnu-rm). Make sure to check "Add path to environment variable" in the installer!
 3. Get the latest release of Ninja by [downloading the exe from here](https://github.com/ninja-build/ninja/releases).
 4. If necessary, update PATH variables so that CMake, GNU ARM toolchain and Ninja are visible on your system.
