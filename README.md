@@ -6,7 +6,7 @@ Read multi-channel differential data using an mbed FRDM K64F board with a Mikroe
 
 This is a C++ driver for an mbed FRDM K64F device which handles all the sensor measurements in a bespoke laboratory needle-insertion test system. However it can be adapted for other applications requiring reading multiple analogue input channels with wide voltage-range (+/- 10 V) at fast data rates, and/or reading multiple encoder values.
 
-The driver is designed to be slave to a host device which sends and receives commands via Ethernet TCP/IP. See `Needle_controller_tester.py` in the project root directory for an example of how to establish a connection and parse commands.
+The driver is designed to be slave to a host device which sends and receives commands via Ethernet TCP/IP. See `Needle_controller_tester.py` in the project root for an example of how to establish a connection and parse commands.
 
 ## Class Description
 
