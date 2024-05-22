@@ -4,13 +4,13 @@ Mbed FRDM K64F with Mikroe ADC 18 Click!
 
 Read multi-channel differential data using an mbed FRDM K64F board with a Mikroe ADC 18 Click board.
 
-This is a C++ driver for an mbed FRDM K64F device which handles all the sensor measurements in a bespoke laboratory needle-insertion test system. However it can be adapted for other applications requiring reading multiple analogue input channels with wide voltage-range (+/- 10 V) at fast data rates, and/or reading multiple encoder values.
+This is a C++ driver for an mbed FRDM K64F device equipped with a Mikroe Arduino Uno Shield and Mikroe ADC 18 Click board, which handles all the sensor measurements in a bespoke laboratory needle-insertion test system. However it can be adapted for other applications requiring reading multiple analogue input channels with wide voltage-range (+/- 10 V) at fast data rates, and/or reading multiple encoder values.
 
 The driver is designed to be slave to a host device which sends and receives commands via Ethernet TCP/IP. See `Needle_controller_tester.py` in the project root for an example of how to establish a connection and parse commands.
 
 ## Description
 
-A parent `NeedleController` class interfaces with a 24-bit Analog-to-Digital Converter (ADC) via the `ADC18` class and a Quadrature Encoder Interface (QEI) via the `QEI` class.
+A parent `NeedleController` class interfaces with a 24-bit Analog-to-Digital Converter (ADC) via the `ADC18` class and three encoders using a Quadrature Encoder Interface (QEI) via the `QEI` class.
 
 In the parent `NeedleController` class, the pins used to construct an instance of the `ADC18` class correspond to the pins for position 1 of the Mikroe Arduino Uno Click Shield. With the exception of the ready pin `rdy` which is ported to a digital pin by a simple external circuit, for greater determinism during falling edge detection.
 
@@ -20,7 +20,7 @@ A `QEI` class file is also included to simultaneously read encoder data with QEI
 
 ## Hardware Requirements
 
-- mbed FRDM K64F board
+- Mbed FRDM K64F board
 - Mikroe Arduino Uno Click Shield (MIKROE-1581)
 - Mikroe ADC 18 Click board (MIKROE-5132)
 
@@ -47,7 +47,7 @@ To configure the build system and compile the project:
 
 ### 1. NeedleController Class
 
-The device flashed with this driver interfaces with a 24-bit Analog-to-Digital Converter (ADC) and a Quadrature Encoder Interface (QEI). The driver provides methods for getting system status, sensor data, starting and stopping data acquisition, and configuring the ADC.
+The FRDM K64F device flashed with this driver interfaces with a 24-bit Analog-to-Digital Converter (ADC) and three encoders using a Quadrature Encoder Interface (QEI). The driver provides methods for getting system status, sensor data, starting and stopping data acquisition, and configuring the ADC.
 
 #### Usage
 
