@@ -49,7 +49,7 @@ Then, you can use the methods provided by the `ADC18` class to interact with the
 
 ### 1. NeedleController Class
 
-This is a C++ driver for a needle insertion test system. As part of the system, this NeedleController device interfaces with an 18-bit Analog-to-Digital Converter (ADC) and a Quadrature Encoder Interface (QEI). The driver provides methods for getting system status, sensor data, starting and stopping data acquisition, and configuring the ADC.
+This is a C++ driver for a needle insertion test system. As part of the overall system, this NeedleController device flashed with this driver interfaces with an 18-bit Analog-to-Digital Converter (ADC) and a Quadrature Encoder Interface (QEI). The driver provides methods for getting system status, sensor data, starting and stopping data acquisition, and configuring the ADC.
 
 #### Enumerations
 
