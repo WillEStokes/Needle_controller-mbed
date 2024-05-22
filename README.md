@@ -135,4 +135,4 @@ This project is maintained by Will Stokes.
 
 ## License
 
-This driver is released under the MIT License.
+This driver is released under the [MIT License](https://opensource.org/licenses/MIT).
