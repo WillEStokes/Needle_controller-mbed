@@ -32,7 +32,7 @@ Clone the repository:
 git clone https://github.com/WillEStokes/Needle_controller-mbed.git
 ```
 
-The project uses an offline version of the mbed library which is configured for the FRDM K64F target using the instruction in the [mbed-cmake repo](https://github.com/USCRPL/mbed-cmake).
+The project uses an offline version of the mbed library which is configured for the FRDM K64F target using the instructions in the [mbed-cmake repo](https://github.com/USCRPL/mbed-cmake).
 
 To to configure the build system and compile the project:
 
