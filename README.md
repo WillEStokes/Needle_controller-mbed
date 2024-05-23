@@ -2,15 +2,15 @@
 
 Mbed FRDM K64F with Mikroe ADC 18 Click!
 
-Read multi-channel differential data using an mbed FRDM K64F board with a Mikroe ADC 18 Click board.
+Read multi-channel, wide voltage-range differential data.
 
-This is a C++ driver for an mbed FRDM K64F device which handles all the sensor measurements in a bespoke laboratory needle-insertion test system. However it can be adapted for other applications requiring reading multiple analogue input channels with wide voltage-range (+/- 10 V) at fast data rates, and/or reading multiple encoder values.
+This is a C++ driver for an mbed FRDM K64F device equipped with a Mikroe Arduino Uno Shield and Mikroe ADC 18 Click board, which is designed to handle all the sensor measurements in a bespoke laboratory needle-insertion test system. However it can be adapted for other applications requiring reading multiple analogue input channels with wide voltage-range (+/- 10 V) at fast data rates, and/or reading multiple encoder values.
 
-The driver is designed to be slave to a host device which sends and receives commands via Ethernet TCP/IP. See `Needle_controller_tester.py` in the project root for an example of how to establish a connection and parse commands.
+The driver is designed to be slave to a host device which sends and receives commands via Ethernet TCP/IP. See `Needle_controller_tester.py` in the project root for an example of how to establish a connection and parse commands to the controller.
 
 ## Description
 
-A parent `NeedleController` class interfaces with a 24-bit Analog-to-Digital Converter (ADC) via the `ADC18` class and a Quadrature Encoder Interface (QEI) via the `QEI` class.
+A parent `NeedleController` class interfaces with a 24-bit Analog-to-Digital Converter (ADC) via the `ADC18` class and three encoders using a Quadrature Encoder Interface (QEI) via the `QEI` class.
 
 In the parent `NeedleController` class, the pins used to construct an instance of the `ADC18` class correspond to the pins for position 1 of the Mikroe Arduino Uno Click Shield. With the exception of the ready pin `rdy` which is ported to a digital pin by a simple external circuit, for greater determinism during falling edge detection.
 
@@ -20,11 +20,11 @@ A `QEI` class file is also included to simultaneously read encoder data with QEI
 
 ## Hardware Requirements
 
-- mbed FRDM K64F board
+- Mbed FRDM K64F board
 - Mikroe Arduino Uno Click Shield (MIKROE-1581)
 - Mikroe ADC 18 Click board (MIKROE-5132)
 
-## Installation
+## Installation and Compilation
 
 Clone the repository:
 
@@ -32,11 +32,22 @@ Clone the repository:
 git clone https://github.com/WillEStokes/Needle_controller-mbed.git
 ```
 
+The project uses an offline version of the mbed library which is configured for the FRDM K64F target using the instructions in the [mbed-cmake repo](https://github.com/USCRPL/mbed-cmake).
+
+To configure the build system and compile the project:
+
+1. Get CMake by [downloading the installer from here](https://cmake.org/download/). Make sure to select "Add CMake to the system PATH for all users" during installation!
+2. Get the GNU ARM toolchain by [downloading the 32-bit installer from ARM's website](https://developer.arm.com/downloads/-/gnu-rm). Make sure to check "Add path to environment variable" during installation!
+3. Get the latest release of Ninja by [downloading the exe from here](https://github.com/ninja-build/ninja/releases).
+4. If necessary, update PATH variables so that CMake, GNU ARM toolchain and Ninja are visible on your system.
+5. To configure cmake build files for the project, run `cmake -G Ninja ${Workspace Folder}` in the command console from the build directory. Make sure to terminate ${Workspace Folder} with a "\\". Previous cache files may need to be manually removed before configuring, or reconfiguring any build files.
+6. Finally to compile the project into a binary file, simply run `ninja` in the command console from the build directory.
+
 ## API Reference
 
 ### 1. NeedleController Class
 
-The device flashed with this driver interfaces with a 24-bit Analog-to-Digital Converter (ADC) and a Quadrature Encoder Interface (QEI). The driver provides methods for getting system status, sensor data, starting and stopping data acquisition, and configuring the ADC.
+The FRDM K64F device flashed with this driver interfaces with a 24-bit Analog-to-Digital Converter (ADC) and three encoders using a Quadrature Encoder Interface (QEI). The driver provides methods for getting system status, sensor data, starting and stopping data acquisition, and configuring the ADC.
 
 #### Usage
 
@@ -58,9 +69,9 @@ needleController.run();
 - `MSG_LIST`: A list of message errors.
 - `BOARD_STATES`: A list of board states.
 
-#### Methods
+#### Public Methods
 
-The class provides several methods for getting system status, system info, force-torque sensor data, encoder sensor data, all sensor data, starting and stopping data acquisition, resetting the ADC, checking the ADC, setting the ADC conversion mode, and setting the ADC data rate.
+The class provides several public methods for getting system status, system info, force-torque sensor data, encoder sensor data, all sensor data, starting and stopping data acquisition, resetting the ADC, checking the ADC, setting the ADC conversion mode, and setting the ADC data rate.
 
 - `NeedleController(PinName redLED, PinName statusLED)`: Parameterised constructor. Initializes a new instance of the NeedleController class with specified LED pins.
 - `void getStatus(const MessageHeader* data)`: Retrieves the status of the device.
@@ -104,14 +115,14 @@ This driver requires the mbed.h, EthernetInterface.h, ADC18.h, and QEI.h librari
 
 ### 2. ADC18 Driver Class
 
-This is a C++ driver for a 24-bit Analog-to-Digital Converter (ADC), specifically the ADC18 model. This driver allows you to interact with the ADC, providing methods for setting the conversion mode, setting the data rate, resetting the device, and reading the ADC data.
+This is a C++ driver for a 24-bit Analog-to-Digital Converter (ADC), specifically the ADC18 model. This driver allows you to interact with the ADC, providing methods for setting the conversion mode, setting the data rate and reading the ADC data.
 
 #### Features
 
 - Set conversion mode
 - Set data rate
-- Reset device
-- Read ADC data
+- Read ADC data (single data point)
+- Read ADC data (mean of user-specified number of data points)
 
 #### Usage
 
@@ -123,9 +134,9 @@ ADC18 adc18(PinName rdy, PinName chip_select, PinName int_pin, PinName mosi_pin,
 
 Then, you can use the methods provided by the `ADC18` class to interact with the ADC.
 
-#### Methods
+#### Public Methods
 
-The driver provides several methods for reading the ADC, checking the number of samples, reading the voltage, reading a register, and writing to a register.
+The driver provides several public methods for configuring and reading the ADC.
 
 - `ADC18::ADCData_6Channel getADCData_6Channel()`: Retrieves the 6-channel ADC data.
 - `ADC18::ADCData_6Channel getADCData_6Channel_multiple(uint8_t samplesToAverage)`: Retrieves the 6-channel ADC data multiple times, averaging the specified number of samples.
@@ -133,6 +144,8 @@ The driver provides several methods for reading the ADC, checking the number of 
 - `int adc18_set_conversion_mode(uint8_t mode)`: Sets the conversion mode of the ADC18 device.
 - `void adc18_set_data_rate(uint8_t rate)`: Sets the data rate of the ADC18 device.
 - `void adc18_reset_device()`: Resets the ADC18 device.
+
+Private methods include reading the voltage, reading a register, and writing to a register for more customised usage.
 
 #### Requirements
 
