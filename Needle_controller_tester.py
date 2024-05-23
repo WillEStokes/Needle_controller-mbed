@@ -106,10 +106,6 @@ class K64F:
         print("Stop acquisition message sent.")
         self.stop_data_stream()
 
-    def set_data_offset(self):
-        if self.data_stream:
-            self.data_stream.set_data_offset()
-
     def close(self):
         if self.connected:
             self.socket.close()
