@@ -69,7 +69,7 @@ needleController.run();
 - `MSG_LIST`: A list of message errors.
 - `BOARD_STATES`: A list of board states.
 
-#### Methods
+#### Public Methods
 
 The class provides several methods for getting system status, system info, force-torque sensor data, encoder sensor data, all sensor data, starting and stopping data acquisition, resetting the ADC, checking the ADC, setting the ADC conversion mode, and setting the ADC data rate.
 
@@ -134,9 +134,9 @@ ADC18 adc18(PinName rdy, PinName chip_select, PinName int_pin, PinName mosi_pin,
 
 Then, you can use the methods provided by the `ADC18` class to interact with the ADC.
 
-#### Methods
+#### Public Methods
 
-The driver provides several methods for reading the ADC, checking the number of samples, reading the voltage, reading a register, and writing to a register.
+The driver provides several public methods for configuring and reading the ADC.
 
 - `ADC18::ADCData_6Channel getADCData_6Channel()`: Retrieves the 6-channel ADC data.
 - `ADC18::ADCData_6Channel getADCData_6Channel_multiple(uint8_t samplesToAverage)`: Retrieves the 6-channel ADC data multiple times, averaging the specified number of samples.
@@ -144,6 +144,8 @@ The driver provides several methods for reading the ADC, checking the number of 
 - `int adc18_set_conversion_mode(uint8_t mode)`: Sets the conversion mode of the ADC18 device.
 - `void adc18_set_data_rate(uint8_t rate)`: Sets the data rate of the ADC18 device.
 - `void adc18_reset_device()`: Resets the ADC18 device.
+
+Private methods include reading the voltage, reading a register, and writing to a register for more customised usage.
 
 #### Requirements
 
