@@ -145,7 +145,7 @@ The driver provides several public methods for configuring and reading the ADC.
 - `void adc18_set_data_rate(uint8_t rate)`: Sets the data rate of the ADC18 device.
 - `void adc18_reset_device()`: Resets the ADC18 device.
 
-Private methods include reading the voltage, reading a register, and writing to a register for more customised usage.
+Private methods include reading the voltage, reading a register, and writing to a register.
 
 #### Requirements
 
