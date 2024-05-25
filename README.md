@@ -85,7 +85,6 @@ typedef struct {
 
 This class contains private methods for getting system status, system info, force-torque sensor data, encoder sensor data, all sensor data, starting and stopping data acquisition, resetting the ADC, checking the ADC, setting the ADC conversion mode, and setting the ADC data rate.
 
-- `NeedleController(PinName redLED, PinName statusLED)`: Parameterised constructor. Initializes a new instance of the NeedleController class with specified LED pins.
 - `void getStatus(const MessageHeader* data)`: Retrieves the status of the device.
 - `void getSystemInfo(const MessageHeader* data)`: Retrieves the system information.
 - `void getFTSensorData(const MessageHeader* data)`: Retrieves the Force-Torque sensor data.
