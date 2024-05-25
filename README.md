@@ -2,7 +2,7 @@
 
 Mbed FRDM K64F with Mikroe ADC 18 Click!
 
-Read multi-channel, wide voltage-range differential data.
+Read multi-channel, wide voltage-range differential data with an mbed microcontroller.
 
 This is a C++ driver for an mbed FRDM K64F device equipped with a Mikroe Arduino Uno Shield and Mikroe ADC 18 Click board, which is designed to handle all the sensor measurements in a bespoke laboratory needle-insertion test system. However it can be adapted for other applications requiring reading multiple analogue input channels with wide voltage-range (+/- 10 V) at fast data rates, and/or reading multiple encoder values.
 
@@ -12,7 +12,7 @@ The driver is designed to be slave to a host device which sends and receives com
 
 A parent `NeedleController` class interfaces with a 24-bit Analog-to-Digital Converter (ADC) via the `ADC18` class and three encoders using a Quadrature Encoder Interface (QEI) via the `QEI` class.
 
-In the parent `NeedleController` class, the pins used to construct an instance of the `ADC18` class correspond to the pins for position 1 of the Mikroe Arduino Uno Click Shield. With the exception of the ready pin `rdy` which is ported to a digital pin by a simple external circuit, for greater determinism during falling edge detection.
+In the parent `NeedleController` class, the pins used to construct an instance of the `ADC18` class correspond to the pins for position 1 of the Mikroe Arduino Uno Click Shield. With the exception of the ready pin `rdy` which is ported from the default analogue pin (A0) to a digital pin (D7) by a simple external circuit, for greater determinism during falling edge detection.
 
 The `ADC18` class file is adapted from the [official Mikroe source code](https://libstock.mikroe.com/projects/view/4951/adc-18-click).
 
@@ -63,36 +63,40 @@ Then, you can use the methods provided by the `NeedleController` class to intera
 needleController.run();
 ```
 
-#### Enumerations
+#### Control Interface
 
-- `FID_LIST`: A list of accepted function IDs (FIDs) for various operations.
-- `MSG_LIST`: A list of message errors.
-- `BOARD_STATES`: A list of board states.
+This class contains a message array variable `comMessages`, which holds pointers to several private methods, each assigned a unique function ID.
 
-#### Public Methods
+When connected to a host device, the run loop continuously checks for incoming `MessageHeader` messages containing the ID of the method to call. Upon receiving a message, the loop identifies and invokes the corresponding method based on the function ID in the `comMessages` array.
 
-The class provides several public methods for getting system status, system info, force-torque sensor data, encoder sensor data, all sensor data, starting and stopping data acquisition, resetting the ADC, checking the ADC, setting the ADC conversion mode, and setting the ADC data rate.
+```cpp
+typedef struct {
+    uint16_t packetLength;
+    uint8_t fid;
+    uint8_t error;
+} __attribute__((__packed__)) MessageHeader;
+```
 
-- `NeedleController(PinName redLED, PinName statusLED)`: Parameterised constructor. Initializes a new instance of the NeedleController class with specified LED pins.
+- `packetLength`: Length of the message packet in bytes.
+- `fid`: Unique function ID.
+- `error`: Error status.
+
+#### Private Methods
+
+This class contains private methods for getting system status, system info, force-torque sensor data, encoder sensor data, all sensor data, starting and stopping data acquisition, resetting the ADC, checking the ADC, setting the ADC conversion mode, and setting the ADC data rate.
+
 - `void getStatus(const MessageHeader* data)`: Retrieves the status of the device.
 - `void getSystemInfo(const MessageHeader* data)`: Retrieves the system information.
 - `void getFTSensorData(const MessageHeader* data)`: Retrieves the Force-Torque sensor data.
 - `void getEncoderSensorData(const MessageHeader* data)`: Retrieves the encoder sensor data.
 - `void getAllSensorData(const MessageHeader* data)`: Retrieves all sensor data.
-- `void getAllSensorDataMultiple(const Settings* data)`: Retrieves all sensor data multiple times based on the settings.
+- `void getAllSensorDataMean(const Settings* data)`: Retrieves all sensor data multiple times based on the settings.
 - `void startAcquisitionStream(const MessageHeader* data)`: Starts the acquisition stream.
 - `void stopAcquisitionStream(const MessageHeader* data)`: Stops the acquisition stream.
 - `void resetADC(const MessageHeader* data)`: Resets the ADC (Analog-to-Digital Converter).
 - `void checkADC(const MessageHeader* data)`: Checks the status of the ADC.
 - `void setADCConversionMode(const Settings* data)`: Sets the conversion mode of the ADC.
 - `void setADCDataRate(const Settings* data)`: Sets the data rate of the ADC.
-- `void streamData()`: Streams the data.
-- `void clearAllData(AllData* allData)`: Clears all data.
-- `void flipStatusLED()`: Toggles the status LED.
-- `void setBoardState(int state)`: Sets the state of the board.
-- `void initEthernet()`: Initializes the Ethernet connection.
-- `void comReturn(const void* data, const int errorCode)`: Returns communication data with an error code.
-- `const ComMessage* getComFromHeader(const MessageHeader* header)`: Retrieves the communication message from the header.
 
 #### Function IDs
 
@@ -101,7 +105,7 @@ The class provides several public methods for getting system status, system info
 - `FID_GET_FT_SENSOR_DATA = 2`: Used to get the Force-Torque sensor data.
 - `FID_GET_ENCODER_SENSOR_DATA = 3`: Used to get the encoder sensor data.
 - `FID_GET_ALL_SENSOR_DATA = 4`: Used to get all sensor data.
-- `FID_GET_ALL_SENSOR_DATA_MULTIPLE = 5`: Used to get all sensor data multiple times.
+- `FID_GET_ALL_SENSOR_DATA_MEAN = 5`: Used to get the mean of multiple sensor data readings.
 - `FID_START_ACQUISITION_STREAM = 6`: Used to start the acquisition stream.
 - `FID_STOP_ACQUISITION_STREAM = 7`: Used to stop the acquisition stream.
 - `FID_RESET_ADC = 8`: Used to reset the ADC (Analog-to-Digital Converter).
@@ -134,7 +138,7 @@ ADC18 adc18(PinName rdy, PinName chip_select, PinName int_pin, PinName mosi_pin,
 
 Then, you can use the methods provided by the `ADC18` class to interact with the ADC.
 
-#### Public Methods
+#### Methods
 
 The driver provides several public methods for configuring and reading the ADC.
 
@@ -145,7 +149,7 @@ The driver provides several public methods for configuring and reading the ADC.
 - `void adc18_set_data_rate(uint8_t rate)`: Sets the data rate of the ADC18 device.
 - `void adc18_reset_device()`: Resets the ADC18 device.
 
-Private methods include reading the voltage, reading a register, and writing to a register for more customised usage.
+Private methods include reading the voltage, reading a register, and writing to a register.
 
 #### Requirements
 
