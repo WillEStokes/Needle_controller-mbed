@@ -12,7 +12,7 @@ The driver is designed to be slave to a host device which sends and receives com
 
 A parent `NeedleController` class interfaces with a 24-bit Analog-to-Digital Converter (ADC) via the `ADC18` class and three encoders using a Quadrature Encoder Interface (QEI) via the `QEI` class.
 
-In the parent `NeedleController` class, the pins used to construct an instance of the `ADC18` class correspond to the pins for position 1 of the Mikroe Arduino Uno Click Shield. With the exception of the ready pin `rdy` which is ported to a digital pin by a simple external circuit, for greater determinism during falling edge detection.
+In the parent `NeedleController` class, the pins used to construct an instance of the `ADC18` class correspond to the pins for position 1 of the Mikroe Arduino Uno Click Shield. With the exception of the ready pin `rdy` which is ported from the default analogue pin (A0) to a digital pin (D7) by a simple external circuit, for greater determinism during falling edge detection.
 
 The `ADC18` class file is adapted from the [official Mikroe source code](https://libstock.mikroe.com/projects/view/4951/adc-18-click).
 
