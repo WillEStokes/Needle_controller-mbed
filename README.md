@@ -139,7 +139,7 @@ ADC18 adc18(PinName rdy, PinName chip_select, PinName int_pin, PinName mosi_pin,
 
 Then, you can use the methods provided by the `ADC18` class to interact with the ADC.
 
-#### Public Methods
+#### Methods
 
 The driver provides several public methods for configuring and reading the ADC.
 
