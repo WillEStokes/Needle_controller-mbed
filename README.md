@@ -69,9 +69,25 @@ needleController.run();
 - `MSG_LIST`: A list of message errors.
 - `BOARD_STATES`: A list of board states.
 
-#### Public Methods
+#### Control Interface
 
-The class provides several public methods for getting system status, system info, force-torque sensor data, encoder sensor data, all sensor data, starting and stopping data acquisition, resetting the ADC, checking the ADC, setting the ADC conversion mode, and setting the ADC data rate.
+This class contains several private methods which can be invoked using a message array containing unique IDs of the available functions and corresponding function pointers. When connected to a host device, the run loop continuously checks for incoming `MessageHeader` messages which contain the ID of the function to call. Then when a message is received, the loop uses the function ID to locate and invoke the corresponding function.
+
+```
+typedef struct {`<br />
+    uint16_t packetLength;`<br />
+    uint8_t fid;`<br />
+    uint8_t error;`<br />
+} __attribute__((__packed__)) MessageHeader;`<br />
+```
+
+- `packetLength`: Length of the message packet in bytes.
+- `fid`: Unique function ID.
+- `error`: Error status.
+
+#### Private Methods
+
+The class contains private methods for getting system status, system info, force-torque sensor data, encoder sensor data, all sensor data, starting and stopping data acquisition, resetting the ADC, checking the ADC, setting the ADC conversion mode, and setting the ADC data rate.
 
 - `NeedleController(PinName redLED, PinName statusLED)`: Parameterised constructor. Initializes a new instance of the NeedleController class with specified LED pins.
 - `void getStatus(const MessageHeader* data)`: Retrieves the status of the device.
@@ -86,13 +102,6 @@ The class provides several public methods for getting system status, system info
 - `void checkADC(const MessageHeader* data)`: Checks the status of the ADC.
 - `void setADCConversionMode(const Settings* data)`: Sets the conversion mode of the ADC.
 - `void setADCDataRate(const Settings* data)`: Sets the data rate of the ADC.
-- `void streamData()`: Streams the data.
-- `void clearAllData(AllData* allData)`: Clears all data.
-- `void flipStatusLED()`: Toggles the status LED.
-- `void setBoardState(int state)`: Sets the state of the board.
-- `void initEthernet()`: Initializes the Ethernet connection.
-- `void comReturn(const void* data, const int errorCode)`: Returns communication data with an error code.
-- `const ComMessage* getComFromHeader(const MessageHeader* header)`: Retrieves the communication message from the header.
 
 #### Function IDs
 
