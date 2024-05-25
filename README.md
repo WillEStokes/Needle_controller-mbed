@@ -2,7 +2,7 @@
 
 Mbed FRDM K64F with Mikroe ADC 18 Click!
 
-Read multi-channel, wide voltage-range differential data.
+Read multi-channel, wide voltage-range differential data with an mbed microcontroller.
 
 This is a C++ driver for an mbed FRDM K64F device equipped with a Mikroe Arduino Uno Shield and Mikroe ADC 18 Click board, which is designed to handle all the sensor measurements in a bespoke laboratory needle-insertion test system. However it can be adapted for other applications requiring reading multiple analogue input channels with wide voltage-range (+/- 10 V) at fast data rates, and/or reading multiple encoder values.
 
