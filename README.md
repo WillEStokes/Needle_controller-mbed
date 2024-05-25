@@ -73,7 +73,7 @@ needleController.run();
 
 This class contains several private methods and a message array variable `comMessages`, which holds pointers to these private methods, each assigned a unique function ID.
 
-When connected to a host device, the run loop continuously checks for incoming `MessageHeader` messages containing the ID of the method to call. Upon receiving a message, the loop identifies and invokes the corresponding method based on the function ID.
+When connected to a host device, the run loop continuously checks for incoming `MessageHeader` messages, containing the ID of the method to call. Upon receiving a message, the loop identifies and invokes the corresponding method based on the function ID.
 
 ```cpp
 typedef struct {`<br />
