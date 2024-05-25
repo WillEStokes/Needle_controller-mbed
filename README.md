@@ -70,11 +70,11 @@ This class contains a message array variable `comMessages`, which holds pointers
 When connected to a host device, the run loop continuously checks for incoming `MessageHeader` messages containing the ID of the method to call. Upon receiving a message, the loop identifies and invokes the corresponding method based on the function ID in the `comMessages` array.
 
 ```cpp
-typedef struct {`<br />
-    uint16_t packetLength;`<br />
-    uint8_t fid;`<br />
-    uint8_t error;`<br />
-} __attribute__((__packed__)) MessageHeader;`<br />
+typedef struct {
+    uint16_t packetLength;
+    uint8_t fid;
+    uint8_t error;
+} __attribute__((__packed__)) MessageHeader;
 ```
 
 - `packetLength`: Length of the message packet in bytes.
