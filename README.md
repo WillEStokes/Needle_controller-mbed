@@ -90,7 +90,7 @@ This class contains private methods for getting system status, system info, forc
 - `void getFTSensorData(const MessageHeader* data)`: Retrieves the Force-Torque sensor data.
 - `void getEncoderSensorData(const MessageHeader* data)`: Retrieves the encoder sensor data.
 - `void getAllSensorData(const MessageHeader* data)`: Retrieves all sensor data.
-- `void getAllSensorDataMultiple(const Settings* data)`: Retrieves all sensor data multiple times based on the settings.
+- `void getAllSensorDataMean(const Settings* data)`: Retrieves all sensor data multiple times based on the settings.
 - `void startAcquisitionStream(const MessageHeader* data)`: Starts the acquisition stream.
 - `void stopAcquisitionStream(const MessageHeader* data)`: Stops the acquisition stream.
 - `void resetADC(const MessageHeader* data)`: Resets the ADC (Analog-to-Digital Converter).
