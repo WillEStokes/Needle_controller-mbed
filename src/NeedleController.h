@@ -23,7 +23,7 @@ class NeedleController {
         FID_GET_FT_SENSOR_DATA = 2,
         FID_GET_ENCODER_SENSOR_DATA = 3,
         FID_GET_ALL_SENSOR_DATA = 4,
-        FID_GET_ALL_SENSOR_DATA_MULTIPLE = 5,
+        FID_GET_ALL_SENSOR_DATA_MEAN = 5,
         FID_START_ACQUISITION_STREAM = 6,
         FID_STOP_ACQUISITION_STREAM = 7,
         FID_RESET_ADC = 8,
@@ -120,7 +120,7 @@ private:
     void getFTSensorData(const MessageHeader* data);
     void getEncoderSensorData(const MessageHeader* data);
     void getAllSensorData(const MessageHeader* data);
-    void getAllSensorDataMultiple(const Settings* data);
+    void getAllSensorDataMean(const Settings* data);
     void startAcquisitionStream(const MessageHeader* data);
     void stopAcquisitionStream(const MessageHeader* data);
     void resetADC(const MessageHeader* data);

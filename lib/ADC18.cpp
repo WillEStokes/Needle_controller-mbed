@@ -63,7 +63,7 @@ void ADC18::check_num_samples()
     _num_falling_edges++;
 }
 
-ADC18::ADCData_6Channel ADC18::getADCData_6Channel_multiple(uint8_t samplesToAverage)
+ADC18::ADCData_6Channel ADC18::getADCData_6Channel_mean(uint8_t samplesToAverage)
 {
     _samples_to_average = samplesToAverage;
     float voltage;

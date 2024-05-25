@@ -10,7 +10,7 @@ const NeedleController::ComMessage NeedleController::comMessages[] = {
     {FID_GET_FT_SENSOR_DATA, (NeedleController::messageHandlerFunc)&NeedleController::getFTSensorData},
     {FID_GET_ENCODER_SENSOR_DATA, (NeedleController::messageHandlerFunc)&NeedleController::getEncoderSensorData},
     {FID_GET_ALL_SENSOR_DATA, (NeedleController::messageHandlerFunc)&NeedleController::getAllSensorData},
-    {FID_GET_ALL_SENSOR_DATA_MULTIPLE, (NeedleController::messageHandlerFunc)&NeedleController::getAllSensorDataMultiple},
+    {FID_GET_ALL_SENSOR_DATA_MEAN, (NeedleController::messageHandlerFunc)&NeedleController::getAllSensorDataMean},
     {FID_START_ACQUISITION_STREAM, (NeedleController::messageHandlerFunc)&NeedleController::startAcquisitionStream},
     {FID_STOP_ACQUISITION_STREAM, (NeedleController::messageHandlerFunc)&NeedleController::stopAcquisitionStream},
     {FID_RESET_ADC, (NeedleController::messageHandlerFunc)&NeedleController::resetADC},
@@ -114,14 +114,14 @@ void NeedleController::getAllSensorData(const MessageHeader* data) {
     _socket->send((char*) &allDataMessage, sizeof(AllDataMessage));
 }
 
-void NeedleController::getAllSensorDataMultiple(const Settings* data) { 
+void NeedleController::getAllSensorDataMean(const Settings* data) { 
     static AllDataMessage allDataMessage;
     allDataMessage.header.packetLength = sizeof(allDataMessage);
     allDataMessage.header.fid = FID_GET_ALL_SENSOR_DATA;
     clearAllData(&allDataMessage.allData);
     _startTime = us_ticker_read();
 
-    allDataMessage.allData.adcData_6Channel = _adc18_FT.getADCData_6Channel_multiple(data->value);
+    allDataMessage.allData.adcData_6Channel = _adc18_FT.getADCData_6Channel_mean(data->value);
 
     allDataMessage.allData.time = us_ticker_read() - _startTime;
     D(printf("Time: %d\n", allDataMessage.allData.time));
@@ -146,7 +146,7 @@ void NeedleController::streamData() {
     uint8_t samplesToAverage = 5;
     for (int i = 0; i < samplesToAverage; ++i) {
         // _adcData_6Channel = _adc18_FT.getADCData_6Channel();
-        _adcData_6Channel = _adc18_FT.getADCData_6Channel_multiple(3);
+        _adcData_6Channel = _adc18_FT.getADCData_6Channel_mean(3);
 
         allData.adcData_6Channel.ai1 += _adcData_6Channel.ai1;
         allData.adcData_6Channel.ai2 += _adcData_6Channel.ai2;

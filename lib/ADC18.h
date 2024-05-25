@@ -104,7 +104,7 @@ class ADC18
     } __attribute__((__packed__)) ADCData_6Channel;
 
     ADC18::ADCData_6Channel getADCData_6Channel();
-    ADC18::ADCData_6Channel getADCData_6Channel_multiple(uint8_t samplesToAverage);
+    ADC18::ADCData_6Channel getADCData_6Channel_mean(uint8_t samplesToAverage);
     int adc18_check_communication();
     int adc18_set_conversion_mode(uint8_t mode);
     void adc18_set_data_rate(uint8_t rate);
