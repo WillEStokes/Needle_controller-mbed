@@ -71,7 +71,9 @@ needleController.run();
 
 #### Control Interface
 
-This class contains several private methods which can be invoked using a message array containing unique IDs of the available functions and corresponding function pointers. When connected to a host device, the run loop continuously checks for incoming `MessageHeader` messages which contain the ID of the function to call. Then when a message is received, the loop uses the function ID to locate and invoke the corresponding function.
+This class contains several private methods in addition to a message array variable `comMessages` which contains pointers to the private methods with assigned unique function IDs.
+
+When connected to a host device, the run loop continuously checks for incoming `MessageHeader` messages containing the ID of the method to call. Then when a message is received, the loop locates and invokes the corresponding method.
 
 ```
 typedef struct {`<br />
