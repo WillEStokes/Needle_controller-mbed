@@ -105,7 +105,7 @@ This class contains private methods for getting system status, system info, forc
 - `FID_GET_FT_SENSOR_DATA = 2`: Used to get the Force-Torque sensor data.
 - `FID_GET_ENCODER_SENSOR_DATA = 3`: Used to get the encoder sensor data.
 - `FID_GET_ALL_SENSOR_DATA = 4`: Used to get all sensor data.
-- `FID_GET_ALL_SENSOR_DATA_MULTIPLE = 5`: Used to get all sensor data multiple times.
+- `FID_GET_ALL_SENSOR_DATA_MEAN = 5`: Used to get the mean of multiple sensor data readings.
 - `FID_START_ACQUISITION_STREAM = 6`: Used to start the acquisition stream.
 - `FID_STOP_ACQUISITION_STREAM = 7`: Used to stop the acquisition stream.
 - `FID_RESET_ADC = 8`: Used to reset the ADC (Analog-to-Digital Converter).
