@@ -63,12 +63,6 @@ Then, you can use the methods provided by the `NeedleController` class to intera
 needleController.run();
 ```
 
-#### Enumerations
-
-- `FID_LIST`: A list of accepted function IDs (FIDs) for various operations.
-- `MSG_LIST`: A list of message errors.
-- `BOARD_STATES`: A list of board states.
-
 #### Control Interface
 
 This class contains a message array variable `comMessages`, which holds pointers to several private methods, each assigned a unique function ID.
