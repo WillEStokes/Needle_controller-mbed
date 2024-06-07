@@ -38,7 +38,7 @@ NeedleController::NeedleController(
                 D13 ),  // sck
         _qei_x(D0, D1, NC, QEI::X4_ENCODING),
         _qei_y(D3, D5, NC, QEI::X4_ENCODING),
-        _qei_z(D9, D6, NC, QEI::X4_ENCODING),
+        _qei_z(D6, D9, NC, QEI::X4_ENCODING),
         _fidCount(sizeof (comMessages) / sizeof (ComMessage)), // constant
         _msgHeaderLength(sizeof (MessageHeader)) {
     // turn LED ON by default
@@ -251,7 +251,7 @@ void NeedleController::comReturn(const void* data, const int errorCode) {
     _socket->send((char*) message, _msgHeaderLength);
 }
 
-/*! Setting the pump state */
+/*! Setting the board state */
 void NeedleController::setBoardState(int state) {
     
     _boardState = state;

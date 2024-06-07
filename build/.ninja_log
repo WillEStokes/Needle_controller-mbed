@@ -1741,3 +1741,9 @@
 241	12494	7380795540160293	CMakeFiles/NeedleController.dir/lib/ADC18.cpp.obj	f63dbed1dfb14faf
 196	12677	7380795541985412	CMakeFiles/NeedleController.dir/src/NeedleController.cpp.obj	f7ba5d2d8c9848ba
 12683	15031	7380795556253191	NeedleController.elf	ff7da1f3e443d917
+371	18159	7392170907723148	CMakeFiles/NeedleController.dir/lib/ADC18.cpp.obj	f63dbed1dfb14faf
+132	18187	7392170907972492	CMakeFiles/NeedleController.dir/main.cpp.obj	ef456218581a85c8
+304	18341	7392170909578187	CMakeFiles/NeedleController.dir/src/NeedleController.cpp.obj	f7ba5d2d8c9848ba
+18349	23452	7392170941283004	NeedleController.elf	ff7da1f3e443d917
+99	9629	7392176460521201	CMakeFiles/NeedleController.dir/src/NeedleController.cpp.obj	f7ba5d2d8c9848ba
+9638	12747	7392176475956178	NeedleController.elf	ff7da1f3e443d917

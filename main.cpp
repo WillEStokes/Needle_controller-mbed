@@ -5,7 +5,7 @@
 
 NeedleController needleController(
     LED1,
-    D9 );
+    D8 );
 
 int main(int, char**) {
     needleController.run();
