@@ -143,7 +143,7 @@ Then, you can use the methods provided by the `ADC18` class to interact with the
 The driver provides several public methods for configuring and reading the ADC.
 
 - `ADC18::ADCData_6Channel getADCData_6Channel()`: Retrieves the 6-channel ADC data.
-- `ADC18::ADCData_6Channel getADCData_6Channel_multiple(uint8_t samplesToAverage)`: Retrieves the 6-channel ADC data multiple times, averaging the specified number of samples.
+- `ADC18::ADCData_6Channel getADCData_6Channel_mean(uint8_t samplesToAverage)`: Retrieves `samplesToAverage` samples for each channel of the 6-channel ADC data, then returns the means.
 - `int adc18_check_communication()`: Checks the communication with the ADC18 device.
 - `int adc18_set_conversion_mode(uint8_t mode)`: Sets the conversion mode of the ADC18 device.
 - `void adc18_set_data_rate(uint8_t rate)`: Sets the data rate of the ADC18 device.
