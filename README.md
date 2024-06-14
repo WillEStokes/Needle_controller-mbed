@@ -119,7 +119,7 @@ This driver requires the mbed.h, EthernetInterface.h, ADC18.h, and QEI.h librari
 
 ### 2. ADC18 Driver Class
 
-This is a C++ driver for a 24-bit Analog-to-Digital Converter (ADC), specifically the ADC 18 model. This driver allows you to interact with the ADC, providing methods for setting the conversion mode, setting the data rate and reading the ADC data.
+This is a C++ driver for a Mikroe Analog-to-Digital Converter (ADC), specifically the 24-bit ADC 18 model. This driver allows you to interact with the ADC, providing methods for setting the conversion mode, setting the data rate and reading the ADC data.
 
 #### Features
 
