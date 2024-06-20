@@ -30,7 +30,7 @@ NeedleController::NeedleController(
         _statusLED(statusLED),
         _adc18_FT(
                 // PTB2,   // rdy
-                D7,     // rdy (digital falling edge is more deterministic than analog)
+                D7,     // rdy (digital falling edge interrupt is more deterministic than analog)
                 D10,    // chip_select
                 D2,     // int_pin
                 D11,    // mosi
@@ -143,7 +143,7 @@ void NeedleController::streamData() {
     allData.encoder_data.yPos = static_cast<float>(_qei_y.getPulses()) * QEI_SCALE_FACTOR;
     allData.encoder_data.zPos = static_cast<float>(_qei_z.getPulses()) * QEI_SCALE_FACTOR;
 
-    uint8_t samplesToAverage = 5;
+    uint8_t samplesToAverage = 3;
     for (int i = 0; i < samplesToAverage; ++i) {
         // _adcData_6Channel = _adc18_FT.getADCData_6Channel();
         _adcData_6Channel = _adc18_FT.getADCData_6Channel_mean(3);
@@ -305,7 +305,6 @@ void NeedleController::run() {
             _socketBytes = _socket->recv(data, _msgHeaderLength);
             if (_socketBytes <= 0) break;
             
-            // if (_socketBytes > 0) {
             header = (MessageHeader*)data;
             
             if (header->packetLength != _msgHeaderLength) {
@@ -315,8 +314,6 @@ void NeedleController::run() {
             const ComMessage* comMessage = getComFromHeader(header);
             
             if(comMessage != NULL && comMessage->replyFunc != NULL) {
-                // D(printf("FID to call: %d\n", comMessage->fid));
-                // Fact: comMessage->fid is equivalent to (*comMessage).fid
                 (this->*comMessage->replyFunc)((void*)data);
             } else {
                 comReturn(data, MSG_ERROR_NOT_SUPPORTED);
