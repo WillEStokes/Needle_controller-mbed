@@ -158,7 +158,3 @@ This driver requires the mbed.h library.
 ## Credits
 
 This project is maintained by Will Stokes.
-
-## License
-
-This driver is released under the [MIT License](https://opensource.org/licenses/MIT).
