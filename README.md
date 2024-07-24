@@ -39,9 +39,10 @@ To configure the build system and compile the project:
 1. Get CMake by [downloading the installer from here](https://cmake.org/download/). Make sure to select "Add CMake to the system PATH for all users" during installation!
 2. Get the GNU ARM toolchain by [downloading the 32-bit installer from ARM's website](https://developer.arm.com/downloads/-/gnu-rm). Make sure to check "Add path to environment variable" during installation!
 3. Get the latest release of Ninja by [downloading the exe from here](https://github.com/ninja-build/ninja/releases).
-4. If necessary, update PATH variables so that CMake, GNU ARM toolchain and Ninja are visible on your system.
-5. To configure cmake build files for the project, run `cmake -G Ninja ${Workspace Folder}` in the command console from the build directory. Make sure to terminate ${Workspace Folder} with a "\\". Previous cache files may need to be manually removed before configuring, or reconfiguring any build files.
-6. Finally to compile the project into a binary file, simply run `ninja` in the command console from the build directory.
+5. If necessary, update PATH variables so that CMake, GNU ARM toolchain and Ninja are visible on your system.
+6. Install mb_os_tools by running `pip install mbed_os_tools`
+7. To configure cmake build files for the project, run `cmake -G Ninja [Workspace Folder]` in the command console from the build directory. Make sure to terminate [Workspace Folder] with a "\\". Previous cache files may need to be manually removed before configuring, or reconfiguring any build files.
+8. Finally to compile the project into a binary file, simply run `ninja` in the command console from the build directory.
 
 ## API Reference
 
